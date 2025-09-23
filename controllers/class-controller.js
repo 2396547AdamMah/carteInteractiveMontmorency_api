@@ -4,8 +4,6 @@ const db = await connectDB();
 // console.log(db);
 
 const getAllClasses = async (req, res, next) => {
-    const query = "SELECT * FROM classes";
-
     const result = await db.from("classes").select();
     res.status(200).json(result.data);
 }
@@ -16,10 +14,16 @@ const getClassByCode = async (req, res, next) => {
 }
 
 const createClass = async (req,res, next) => {
-    // let code = req.body.code;
-    // const query = `INSERT INTO classes (id, code) VALUES (DEFAULT, '${code}');`;
-    // const result = await db.query(query);
-    res.status(200);
+    try {
+        const result = await db.from("classes").insert(req.body);
+        if (result.err) {
+            next(err);
+        } else {
+            res.status(201).json(result.data);
+        }
+    } catch(err) {
+        next(err);
+    }
 }
 
 export default {
