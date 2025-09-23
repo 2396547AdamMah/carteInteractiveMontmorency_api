@@ -3,7 +3,9 @@ import dotenv from "dotenv";
 import pool from "./util/database.js";
 import errorHandler from "./middlewares/error-handler.js";
 import  connectDB  from "./util/database.js";
+
 import classRoutes from "./routes/class-routes.js"
+import studentRoutes from "./routes/student-routes.js";
 
 import { createClient } from "@supabase/supabase-js";
 
@@ -39,6 +41,7 @@ app.use((req, res, next) => {
 // }
 // //Routes
 app.use("/api/class", classRoutes);
+app.use("/api/students",studentRoutes);
 
 // app.get("/hello", async( req, res, next) => {
 //   const query = "SELECT * FROM classes";
